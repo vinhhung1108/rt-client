@@ -31,7 +31,7 @@ export function LoginForm({ onSubmit }: LoginFormProps) {
   })
 
   async function handleLoginSubmit(payload: LoginPayload) {
-    console.log(payload)
+    // console.log(payload)
     await onSubmit?.(payload)
   }
   return (
