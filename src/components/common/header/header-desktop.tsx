@@ -17,6 +17,7 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
   const isLoggedIn = Boolean(profile?.username)
 
   const routeList = ROUTER_LIST.filter((route) => !route.requiredLogin || isLoggedIn)
+
   return (
     <Box display={{ xs: 'none', md: 'block' }} py={2}>
       <Container>

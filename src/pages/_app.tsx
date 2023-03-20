@@ -21,7 +21,6 @@ export default function App({
 AppPropsWithLayout) {
   moment.tz.setDefault('Asia/Ho_Chi_Minh')
   moment.locale('en-bg')
-  console.log('Render  App')
   const Layout = Component.Layout ?? EmptyLayout
   return (
     <CacheProvider value={clientSideEmotionCache}>

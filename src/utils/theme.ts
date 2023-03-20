@@ -31,25 +31,25 @@ export let theme = createTheme({
     fontFamily: 'Heebo, sans-serif',
   },
   components: {
-    MuiContainer: {
-      defaultProps: {
-        maxWidth: 'md',
-      },
-      styleOverrides: {
-        maxWidthMd: {
-          maxWidth: '860px',
-          '@media (min-width: 900px)': {
-            maxWidth: '860px',
-          },
-        },
-        maxWidthSm: {
-          maxWidth: '680px',
-          '@media (min-width: 600px)': {
-            maxWidth: '680px',
-          },
-        },
-      },
-    },
+    // MuiContainer: {
+    //   defaultProps: {
+    //     maxWidth: 'md',
+    //   },
+    //   styleOverrides: {
+    //     maxWidthMd: {
+    //       maxWidth: '860px',
+    //       '@media (min-width: 900px)': {
+    //         maxWidth: '860px',
+    //       },
+    //     },
+    //     maxWidthSm: {
+    //       maxWidth: '680px',
+    //       '@media (min-width: 600px)': {
+    //         maxWidth: '680px',
+    //       },
+    //     },
+    //   },
+    // },
     MuiLink: {
       defaultProps: {
         underline: 'none',

@@ -10,7 +10,7 @@ function getUserInfo(): UserProfile | null {
     return JSON.parse(localStorage.getItem(StorageKeys.USER_INFO) || '')
   } catch (error) {
     console.log(error)
-    return null
+    return { data: { username: '' } }
   }
 }
 
@@ -20,7 +20,7 @@ export function useAuth(option?: Partial<PublicConfiguration>) {
   const configSWR: SWRConfiguration = {
     dedupingInterval: TimeByMilliseconds.HOUR,
     ...option,
-    fallbackData: getUserInfo,
+    // fallbackData: getUserInfo,
     onSuccess(data) {
       //save user info to localstorage
       localStorage.setItem(StorageKeys.USER_INFO, JSON.stringify(data))
