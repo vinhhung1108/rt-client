@@ -7,15 +7,15 @@ export function AdminLayout({ children }: LayoutProps) {
   // const router = useRouter()
 
   return (
-    <Auth>
-      <Stack minHeight="100vh">
-        <Header />
-        <Box component="main" flexGrow={1}>
-          <h2>Admin Layout</h2>
-          {children}
-        </Box>
-        <Footer />
-      </Stack>
-    </Auth>
+    // <Auth>
+    <Stack minHeight="100vh">
+      <Header />
+      <Box component="main" flexGrow={1}>
+        <h2>Admin Layout</h2>
+        {children}
+      </Box>
+      <Footer />
+    </Stack>
+    // </Auth>
   )
 }

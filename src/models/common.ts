@@ -8,9 +8,8 @@ export interface LayoutProps {
 }
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-  Layout?: (
-    props: LayoutProps
-  ) => ReactElement /** Replace ReactNode (null, number, undefine,...) */
+  Layout?: (props: LayoutProps) => ReactElement
+  isPrivate?: boolean
 }
 
 export type AppPropsWithLayout = AppProps & {

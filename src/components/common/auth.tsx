@@ -6,8 +6,9 @@ import { useSWRConfig } from 'swr'
 
 export interface AuthProps {
   children: ReactNode
+  isPrivate?: boolean
 }
-export function Auth({ children }: AuthProps) {
+export function Auth({ children, isPrivate = true }: AuthProps) {
   const router = useRouter()
   const { mutate: mutateAll } = useSWRConfig()
   const { profile, logout, isLoading, error, mutate } = useAuth({
@@ -16,16 +17,13 @@ export function Auth({ children }: AuthProps) {
     dedupingInterval: TimeByMilliseconds.HOUR,
   })
 
-  if (error && !isLoading) {
-    // mutate({ data: {} }, true)
-    // mutateAll('/auth/profile/', { data: {} }, false)
-    // router.push('/login')
+  if (!isLoading && error && isPrivate) {
     logout()
   }
 
   useEffect(() => {
-    if (!isLoading && !profile?.username) router.push('/login')
-  }, [profile, isLoading, router])
+    if (isPrivate && !isLoading && !profile?.username) router.push('/login')
+  }, [profile, isLoading, router, isPrivate])
 
   if (isLoading) return <p>Loading...</p>
 

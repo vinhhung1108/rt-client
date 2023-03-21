@@ -12,3 +12,4 @@ export default function AdminPage(props: AdminPageProps) {
 }
 
 AdminPage.Layout = AdminLayout
+AdminPage.isPrivate = true

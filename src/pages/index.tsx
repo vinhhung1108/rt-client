@@ -25,5 +25,6 @@ const Home: NextPageWithLayout = () => {
 }
 
 Home.Layout = MainLayout
+Home.isPrivate = false
 
 export default Home
