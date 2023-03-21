@@ -27,8 +27,6 @@ export function Auth({ children }: AuthProps) {
     if (!isLoading && !profile?.username) router.push('/login')
   }, [profile, isLoading, router])
 
-  //   console.log(profile)
-
   if (isLoading) return <p>Loading...</p>
 
   return <div>{children}</div>

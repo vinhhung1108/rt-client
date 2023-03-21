@@ -1,6 +1,6 @@
 import { Work } from '@/models/work'
 import { Chip, Stack, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box } from '@mui/material'
 import { format } from 'date-fns'
 import Image from 'next/image'
 

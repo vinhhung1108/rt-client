@@ -2,8 +2,7 @@ import { LoginForm } from '@/components/auth'
 import { TimeByMilliseconds } from '@/constants'
 import { useAuth } from '@/hooks'
 import { LoginPayload } from '@/models'
-import { Paper, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 
 export default function LoginPage() {

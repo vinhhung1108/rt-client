@@ -1,6 +1,6 @@
 import avatar from '@/images/Ellipse 1.png'
 import { Button, Container, Stack, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box } from '@mui/material'
 import Image from 'next/image'
 
 export function HeroSection() {

@@ -1,8 +1,5 @@
-import { useAuth } from '@/hooks'
-import { LayoutProps } from '@/models'
-import { Stack } from '@mui/material'
-import { Box } from '@mui/system'
-import { useRouter } from 'next/router'
+import { LayoutProps, NextPageWithLayout } from '@/models'
+import { Box, Stack } from '@mui/material'
 import { Auth, Footer, Header } from '../common'
 
 export function AdminLayout({ children }: LayoutProps) {
@@ -14,6 +11,7 @@ export function AdminLayout({ children }: LayoutProps) {
       <Stack minHeight="100vh">
         <Header />
         <Box component="main" flexGrow={1}>
+          <h2>Admin Layout</h2>
           {children}
         </Box>
         <Footer />

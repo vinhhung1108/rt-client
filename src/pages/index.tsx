@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import { Seo } from '@/components/common'
 import { MainLayout } from '@/components/layout'
 import { NextPageWithLayout } from '@/models'
-import { Box } from '@mui/system'
+import { Box } from '@mui/material'
 
 const inter = Inter({ subsets: ['latin'] })
 

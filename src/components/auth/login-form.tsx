@@ -1,13 +1,11 @@
+import { useLoginFormSchema } from '@/hooks'
 import { LoginPayload } from '@/models'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { Button, CircularProgress, IconButton, InputAdornment, LinearProgress } from '@mui/material'
-import { Box } from '@mui/system'
-import React, { useState } from 'react'
+import { Box, Button, CircularProgress, IconButton, InputAdornment } from '@mui/material'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { InputField } from '../form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useLoginFormSchema } from '@/hooks'
 
 export interface LoginFormProps {
   onSubmit?: (payload: LoginPayload) => void

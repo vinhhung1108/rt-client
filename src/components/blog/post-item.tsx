@@ -1,6 +1,6 @@
 import { Post } from '@/models'
 import { Divider, Stack, Typography } from '@mui/material'
-import { Box } from '@mui/system'
+import { Box } from '@mui/material'
 import { format } from 'date-fns'
 
 export interface PostItemProps {
