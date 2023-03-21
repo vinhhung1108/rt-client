@@ -6,6 +6,6 @@ export interface LoginPayload {
 export interface UserProfile {
   data: {
     username: string
-    // email?: string
+    roles?: string[]
   }
 }
