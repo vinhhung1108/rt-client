@@ -21,7 +21,7 @@ export function useAuth(option?: Partial<PublicConfiguration>) {
   const configSWR: SWRConfiguration = {
     dedupingInterval: TimeByMilliseconds.HOUR,
     ...option,
-    fallbackData: getUserInfo,
+    // fallbackData: getUserInfo,
     onSuccess(data) {
       //save user info to localstorage
       localStorage.setItem(StorageKeys.USER_INFO, JSON.stringify(data))

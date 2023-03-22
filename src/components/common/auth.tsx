@@ -1,5 +1,6 @@
 import { TimeByMilliseconds } from '@/constants'
 import { useAuth } from '@/hooks'
+import { Box, Container, Stack, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
 import { render } from 'react-dom'
@@ -10,7 +11,7 @@ export interface AuthProps {
   isPrivate?: boolean
   requiredRoles?: string[]
 }
-export function Auth({ children, isPrivate = true, requiredRoles = [] }: AuthProps) {
+export function Auth({ children, isPrivate = true, requiredRoles = undefined }: AuthProps) {
   const router = useRouter()
   const { mutate: mutateAll } = useSWRConfig()
   const { profile, logout, isLoading, error, mutate } = useAuth({
@@ -24,16 +25,32 @@ export function Auth({ children, isPrivate = true, requiredRoles = [] }: AuthPro
   }
 
   useEffect(() => {
-    if (isPrivate && !isLoading && !profile?.username) router.push('/login')
+    if (router.asPath !== '/login' && isPrivate && !isLoading && !profile?.username)
+      router.push('/login')
   }, [profile, isLoading, router, isPrivate])
 
   const userRoles = profile?.roles
+
+  console.log('Roles: ', userRoles)
+  console.log('Profile: ', profile)
+  console.log('isLoading: ', isLoading)
+  console.log('isPrivate:', isPrivate)
+  console.log('router: ', router)
   const acceptRole = userRoles?.some((role) => requiredRoles?.includes(role))
-  if (!acceptRole) {
-    return <div>You do not have enough access rights!</div>
+  if (requiredRoles && !acceptRole) {
+    return <div>You do not have permisstion to access this page!</div>
   }
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading)
+    return (
+      <Box>
+        <Container sx={{ maxWidth: 'md' }}>
+          <Stack sx={{ mx: 'auto' }}>
+            <Typography variant="h3">Loading...</Typography>
+          </Stack>
+        </Container>
+      </Box>
+    )
 
   return <div>{children}</div>
 }

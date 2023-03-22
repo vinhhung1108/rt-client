@@ -34,3 +34,5 @@ export default function LoginPage() {
     </Box>
   )
 }
+
+LoginPage.isPrivate = false

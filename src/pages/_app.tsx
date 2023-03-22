@@ -20,6 +20,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   moment.locale('en-bg')
   const Layout = Component.Layout ?? EmptyLayout
   const isPrivate = Component.isPrivate
+  const requiredRoles = Component.requiredRoles
 
   return (
     <CacheProvider value={clientSideEmotionCache}>
@@ -31,11 +32,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             shouldRetryOnError: false,
           }}
         >
-          <Auth isPrivate={isPrivate}>
-            <Layout>
+          <Layout>
+            <Auth isPrivate={isPrivate} requiredRoles={requiredRoles}>
               <Component {...pageProps} />
-            </Layout>
-          </Auth>
+            </Auth>
+          </Layout>
         </SWRConfig>
       </ThemeProvider>
     </CacheProvider>

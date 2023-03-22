@@ -7,7 +7,6 @@ export function AdminLayout({ children }: LayoutProps) {
   // const router = useRouter()
 
   return (
-    // <Auth>
     <Stack minHeight="100vh">
       <Header />
       <Box component="main" flexGrow={1}>
@@ -16,6 +15,5 @@ export function AdminLayout({ children }: LayoutProps) {
       </Box>
       <Footer />
     </Stack>
-    // </Auth>
   )
 }

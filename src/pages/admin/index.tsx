@@ -13,3 +13,4 @@ export default function AdminPage(props: AdminPageProps) {
 
 AdminPage.Layout = AdminLayout
 AdminPage.isPrivate = true
+AdminPage.requiredRoles = ['admin', 'mod']
