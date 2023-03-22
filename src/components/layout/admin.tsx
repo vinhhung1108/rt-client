@@ -1,5 +1,6 @@
 import { LayoutProps, NextPageWithLayout } from '@/models'
 import { Box, Stack } from '@mui/material'
+import { SideBar } from '../admin'
 import { Auth, Footer, Header } from '../common'
 
 export function AdminLayout({ children }: LayoutProps) {
@@ -10,8 +11,10 @@ export function AdminLayout({ children }: LayoutProps) {
     <Stack minHeight="100vh">
       <Header />
       <Box component="main" flexGrow={1}>
-        <h2>Admin Layout</h2>
-        {children}
+        <Stack direction={{ xs: 'column', md: 'row' }}>
+          <SideBar />
+          <Box sx={{ p: '20px' }}>{children}</Box>
+        </Stack>
       </Box>
       <Footer />
     </Stack>
