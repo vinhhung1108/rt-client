@@ -6,11 +6,12 @@ import moment from 'moment-timezone'
 import 'moment/locale/en-gb'
 import { SWRConfig } from 'swr'
 
-import { Auth } from '@/components/common'
+import { Auth, Header } from '@/components/common'
 import { createEmotionCache, theme } from '@/utils'
 import { CacheProvider } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
+import { NonAuth } from '@/components/common/non-auth'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -21,6 +22,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const Layout = Component.Layout ?? EmptyLayout
   const isPrivate = Component.isPrivate
   const requiredRoles = Component.requiredRoles
+  const AuthApp = isPrivate ? Auth : NonAuth
 
   return (
     <CacheProvider value={clientSideEmotionCache}>
@@ -32,11 +34,12 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             shouldRetryOnError: false,
           }}
         >
-          <Layout>
-            <Auth isPrivate={isPrivate} requiredRoles={requiredRoles}>
+          <Header />
+          <AuthApp isPrivate={isPrivate} requiredRoles={requiredRoles}>
+            <Layout>
               <Component {...pageProps} />
-            </Auth>
-          </Layout>
+            </Layout>
+          </AuthApp>
         </SWRConfig>
       </ThemeProvider>
     </CacheProvider>

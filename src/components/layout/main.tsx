@@ -5,7 +5,7 @@ import { Footer, Header } from '../common'
 export function MainLayout({ children }: LayoutProps) {
   return (
     <Stack minHeight="100vh">
-      <Header />
+      {/* <Header /> */}
       <Box component="main" flexGrow={1}>
         {children}
       </Box>
