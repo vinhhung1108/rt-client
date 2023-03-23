@@ -1,9 +1,4 @@
-import { TimeByMilliseconds } from '@/constants'
-import { useAuth } from '@/hooks'
-import { Box, Container, LinearProgress, Stack, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
-import { ReactNode, useEffect } from 'react'
-import { useSWRConfig } from 'swr'
+import { ReactNode } from 'react'
 
 export interface NonAuthProps {
   children: ReactNode

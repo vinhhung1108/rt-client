@@ -6,12 +6,11 @@ import moment from 'moment-timezone'
 import 'moment/locale/en-gb'
 import { SWRConfig } from 'swr'
 
-import { Auth, Header } from '@/components/common'
+import { Auth, Header, NonAuth } from '@/components/common'
 import { createEmotionCache, theme } from '@/utils'
 import { CacheProvider } from '@emotion/react'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
-import { NonAuth } from '@/components/common/non-auth'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()

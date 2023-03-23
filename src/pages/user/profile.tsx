@@ -8,3 +8,4 @@ export default function ProfilePage(props: ProfilePageProps) {
 }
 
 ProfilePage.Layout = MainLayout
+ProfilePage.isPrivate = true
