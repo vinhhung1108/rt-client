@@ -1,5 +1,4 @@
-import { MainLayout } from '@/components/layout'
-import * as React from 'react'
+import { UserLayout } from '@/components/layout'
 
 export interface ProfilePageProps {}
 
@@ -7,5 +6,5 @@ export default function ProfilePage(props: ProfilePageProps) {
   return <div>Profile Page</div>
 }
 
-ProfilePage.Layout = MainLayout
+ProfilePage.Layout = UserLayout
 ProfilePage.isPrivate = true

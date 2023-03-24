@@ -4,12 +4,18 @@ export const ROUTER_LIST = [
     path: '/',
   },
   {
-    label: 'Admin',
-    path: '/admin',
+    label: 'Posts',
+    path: '/posts',
+  },
+  {
+    label: 'Profile',
+    path: '/user/profile',
     requiredLogin: true,
   },
   {
-    label: 'Blog',
-    path: '/blog',
+    label: 'Admin',
+    path: '/admin',
+    requiredLogin: true,
+    roleRequire: ['admin'],
   },
 ]

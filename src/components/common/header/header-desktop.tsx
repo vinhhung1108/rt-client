@@ -14,7 +14,13 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
 
   const isLoggedIn = Boolean(profile?.username)
 
-  const routeList = ROUTER_LIST.filter((route) => !route.requiredLogin || isLoggedIn)
+  const roles = profile?.roles
+
+  const routeListLogin = ROUTER_LIST.filter((route) => !route.requiredLogin || isLoggedIn)
+
+  const routeList = routeListLogin.filter((route) => {
+    return !route.roleRequire || roles?.some((role) => route.roleRequire?.includes(role))
+  })
 
   return (
     <Box display={{ xs: 'none', md: 'block' }} py={2}>

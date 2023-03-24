@@ -1,10 +1,11 @@
+import { useAuth } from '@/hooks'
 import { LayoutProps } from '@/models'
 import { Box, Stack } from '@mui/material'
 import { SideBarAdmin } from '../admin'
 import { Footer } from '../common'
 
-export function AdminLayout({ children }: LayoutProps) {
-  // const { profile, logout } = useAuth()
+export function UserLayout({ children }: LayoutProps) {
+  const { profile, logout } = useAuth()
   // const router = useRouter()
 
   return (
@@ -12,7 +13,10 @@ export function AdminLayout({ children }: LayoutProps) {
       <Box component="main" flexGrow={1}>
         <Stack direction={{ xs: 'column', md: 'row' }}>
           <SideBarAdmin />
-          <Box sx={{ p: '20px' }}>{children}</Box>
+          <Box sx={{ p: '20px' }}>
+            {JSON.stringify(profile)}
+            {children}
+          </Box>
         </Stack>
       </Box>
       <Footer />
