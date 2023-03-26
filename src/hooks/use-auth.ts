@@ -10,7 +10,7 @@ function getUserInfo(): UserProfile | null {
     return JSON.parse(localStorage.getItem(StorageKeys.USER_INFO) || '')
   } catch (error) {
     console.log('Can not get user_info from localStorage', error)
-    return { data: { username: '' } }
+    return null
   }
 }
 
@@ -21,7 +21,7 @@ export function useAuth(option?: Partial<PublicConfiguration>) {
   const configSWR: SWRConfiguration = {
     dedupingInterval: TimeByMilliseconds.HOUR,
     ...option,
-    // fallbackData: getUserInfo,
+    fallbackData: getUserInfo,
     onSuccess(data) {
       //save user info to localstorage
       localStorage.setItem(StorageKeys.USER_INFO, JSON.stringify(data))
@@ -51,7 +51,7 @@ export function useAuth(option?: Partial<PublicConfiguration>) {
     await mutateAll('/auth/profile', { data: {} }, false)
   }
   return {
-    profile: profile?.data,
+    profile: profile,
     error,
     login,
     logout,

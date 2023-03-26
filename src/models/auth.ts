@@ -4,8 +4,6 @@ export interface LoginPayload {
 }
 
 export interface UserProfile {
-  data: {
-    username: string
-    roles?: string[]
-  }
+  username: string
+  roles?: string[]
 }
