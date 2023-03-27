@@ -28,7 +28,6 @@ export function useAuth(option?: Partial<PublicConfiguration>) {
     },
     onError(err) {
       //failed to get profile
-      // console.log('Cannot get Profile ', err)
       logout()
     },
   }

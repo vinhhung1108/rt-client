@@ -19,12 +19,12 @@ export function Auth({ children, isPrivate = true, requiredRoles = undefined }: 
     dedupingInterval: TimeByMilliseconds.HOUR,
   })
 
-  console.log('Profile: ', JSON.stringify(profile))
-  console.log('isLoading: ', isLoading)
-  console.log('Router: ', router.asPath)
+  // console.log('Profile: ', JSON.stringify(profile))
+  // console.log('isLoading: ', isLoading)
+  // console.log('Router: ', router.asPath)
 
   if (!isLoading && !profile?.username && isPrivate) {
-    console.log('Call to logout')
+    // console.log('Call to logout')
     logout()
   }
 
@@ -36,17 +36,13 @@ export function Auth({ children, isPrivate = true, requiredRoles = undefined }: 
   const notValidateRole = requiredRoles && !acceptRole
 
   useEffect(() => {
-    console.log('call useEffect with isLoading: ', isLoading)
+    // console.log('call useEffect with isLoading: ', isLoading)
     if (router.asPath !== '/login' && !isLoading && isPrivate && !profile?.username) {
-      console.log('Redirect to login after loading')
+      // console.log('Redirect to login after loading')
       router.push('/login')
     } else if (requiredRoles && !isLoading && !acceptRole) {
-      console.log('RequiredRoles: ', requiredRoles)
+      // console.log('RequiredRoles: ', requiredRoles)
       router.push('/')
-    }
-
-    return function () {
-      console.log('clear function with isLoading: ', isLoading)
     }
   }, [router, isLoading, profile, isPrivate, requiredRoles, acceptRole])
 
@@ -55,7 +51,7 @@ export function Auth({ children, isPrivate = true, requiredRoles = undefined }: 
     (!isLoading && !profile?.username && isPrivate) ||
     (!isLoading && requiredRoles && !acceptRole)
   ) {
-    console.log('Show Is loading')
+    // console.log('Show Is loading')
     return (
       <Box>
         <Container sx={{ maxWidth: 'md' }}>
@@ -75,6 +71,6 @@ export function Auth({ children, isPrivate = true, requiredRoles = undefined }: 
       </Box>
     )
   }
-  console.log('show Children component')
+  // console.log('show Children component')
   return <div>{children}</div>
 }

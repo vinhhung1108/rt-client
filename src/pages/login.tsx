@@ -2,8 +2,10 @@ import { LoginForm } from '@/components/auth'
 import { TimeByMilliseconds } from '@/constants'
 import { useAuth } from '@/hooks'
 import { LoginPayload } from '@/models'
+import { getErrorMessage } from '@/utils/error-with-message'
 import { Box, Paper, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -14,12 +16,20 @@ export default function LoginPage() {
     dedupingInterval: TimeByMilliseconds.HOUR,
   })
 
+  if (!isLoading && profile?.username) {
+    router.push('/')
+  }
+
   async function handleLoginSubmit(payload: LoginPayload) {
     try {
       await login(payload)
       await router.push('/')
-    } catch (error) {
-      console.log('Failed to login ', error)
+    } catch (error: unknown) {
+      // console.log((error as Error)?.message || '')
+      // toast.error((error as Error)?.message || '')
+      const message = getErrorMessage(error)
+      // console.log('Message:', message)
+      toast.error(message)
     }
   }
 

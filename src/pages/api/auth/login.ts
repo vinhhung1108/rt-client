@@ -38,7 +38,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
           const isSuccess =
             proxyRes.statusCode && proxyRes.statusCode >= 200 && proxyRes.statusCode < 300
           if (!isSuccess) {
-            ;(res as NextApiResponse).status(proxyRes.statusCode || 500).json(body)
+            ;(res as NextApiResponse).status(proxyRes.statusCode || 500).json(JSON.parse(body))
             return resolve(true)
           }
           const { accessToken, expiredAt } = JSON.parse(body)
@@ -50,10 +50,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             expires: new Date(moment.unix(expiredAt).format('YYYY-MM-DD HH:mm:ss')),
           })
           ;(res as NextApiResponse)
-            .status(200)
+            .status(res.statusCode)
             .json({ expires: moment.unix(expiredAt).format('YYYY-MM-DD HH:mm:ss') })
         } catch (error) {
-          ;(res as NextApiResponse).status(500).json({ message: 'Somthing went wrong' })
+          ;(res as NextApiResponse).status(res.statusCode).json(JSON.parse(body))
         }
         return resolve(true)
       })
