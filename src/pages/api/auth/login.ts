@@ -38,7 +38,10 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
           const isSuccess =
             proxyRes.statusCode && proxyRes.statusCode >= 200 && proxyRes.statusCode < 300
           if (!isSuccess) {
-            ;(res as NextApiResponse).status(proxyRes.statusCode || 500).json(JSON.parse(body))
+            // ;(res as NextApiResponse).status(proxyRes.statusCode || 500).json(JSON.parse(body))
+            ;(res as NextApiResponse)
+              .status(proxyRes.statusCode || 500)
+              .json({ message: 'Wrong username or password!' })
             return resolve(true)
           }
           const { accessToken, expiredAt } = JSON.parse(body)
