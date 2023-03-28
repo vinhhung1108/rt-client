@@ -1,3 +1,4 @@
+import { ListUsers } from '@/components/admin/list-users'
 import { AdminLayout } from '@/components/layout'
 import { Box, Stack, Typography } from '@mui/material'
 
@@ -13,6 +14,7 @@ export default function UsersManagermentPage(props: UsersManagermentPageProps) {
         </Box>
         <Box>
           <Typography>List of Users</Typography>
+          <ListUsers />
         </Box>
       </Stack>
     </Box>
