@@ -3,12 +3,20 @@ import {
   Drafts as DraftsIcon,
   ExpandLess,
   ExpandMore,
-  Home,
+  Groups as GroupsIcon,
   Inbox as InboxIcon,
-  Send as SendIcon,
   StarBorder,
 } from '@mui/icons-material'
-import { Collapse, Divider, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import {
+  Collapse,
+  Divider,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Link as MuiLink,
+} from '@mui/material'
+import Link from 'next/link'
 import { useState } from 'react'
 
 export interface NestedListProps {}
@@ -33,12 +41,14 @@ export function NestedList(props: NestedListProps) {
         <ListItemText primary="Dashboard" />
       </ListItemButton>
       <Divider />
-      <ListItemButton>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sent mail" />
-      </ListItemButton>
+      <MuiLink component={Link} href="/admin/users-managerment">
+        <ListItemButton>
+          <ListItemIcon>
+            <GroupsIcon />
+          </ListItemIcon>
+          <ListItemText primary="Users Managerment" />
+        </ListItemButton>
+      </MuiLink>
       <ListItemButton>
         <ListItemIcon>
           <DraftsIcon />
