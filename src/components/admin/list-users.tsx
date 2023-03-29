@@ -1,14 +1,14 @@
+import { TimeByMilliseconds } from '@/constants'
 import { useUsers } from '@/hooks'
-import * as React from 'react'
+import { EnhancedTable } from './table'
 
 export interface ListUsersProps {}
 
 export function ListUsers(props: ListUsersProps) {
-  const { users } = useUsers({}, 2, 10)
-  console.log(users)
+  const { users } = useUsers({ dedupingInterval: TimeByMilliseconds.SECOND * 5 }, 1, 0)
   return (
     <div>
-      <ul>{users && users.map((user) => <li key={user.userId}>{user.username}</li>)}</ul>
+      <EnhancedTable users={users || []} />
     </div>
   )
 }
