@@ -1,3 +1,5 @@
+import { TimeByMilliseconds } from '@/constants'
+import { useUsers } from '@/hooks'
 import { User } from '@/models'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
@@ -12,16 +14,16 @@ import React, { useState } from 'react'
 import { EnhancedTableHead, getComparator, Order, stableSort } from './enhanced-table-head'
 import { EnhancedTableToolbar } from './enhaned-table-toolbar'
 
-interface TableProps {
-  users: User[]
-}
-export function EnhancedTable({ users }: TableProps) {
+export function EnhancedTable() {
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof User>('userId')
   const [selected, setSelected] = useState<readonly string[]>([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [pageApi, setPageApi] = useState(1)
+  const [limitApi, setLimitApi] = useState(0)
 
+  const { users } = useUsers({ dedupingInterval: TimeByMilliseconds.SECOND * 5 }, pageApi, limitApi)
   const rows = Array.isArray(users) ? users : []
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof User) => {
@@ -117,9 +119,9 @@ export function EnhancedTable({ users }: TableProps) {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.userId}
                       </TableCell>
-                      <TableCell align="right">{row.username}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
-                      <TableCell align="right">{row.roles.toString()}</TableCell>
+                      <TableCell align="left">{row.username}</TableCell>
+                      <TableCell align="left">{row.email}</TableCell>
+                      <TableCell align="left">{row.roles.toString()}</TableCell>
                     </TableRow>
                   )
                 })}
