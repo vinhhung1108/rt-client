@@ -10,9 +10,6 @@ export default function UsersManagermentPage(props: UsersManagermentPageProps) {
       <Stack direction="column">
         <Typography variant="h5">Users Managerment</Typography>
         <Box>
-          <Typography>Chart Area</Typography>
-        </Box>
-        <Box>
           <Typography>List of Users</Typography>
           <ListUsers />
         </Box>

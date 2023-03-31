@@ -9,9 +9,6 @@ export default function AdminPage(props: AdminPageProps) {
       <Stack direction="column">
         <Typography variant="h5">Admin Panel</Typography>
         <Box>
-          <Typography>Chart Area</Typography>
-        </Box>
-        <Box>
           <Typography>Content for admin dashboard</Typography>
         </Box>
       </Stack>
