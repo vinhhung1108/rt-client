@@ -1,10 +1,6 @@
-import { LoginForm } from '@/components/auth'
-import { TimeByMilliseconds } from '@/constants'
-import { useAuth } from '@/hooks'
-import { LoginPayload } from '@/models'
+import { UserPayload } from '@/models'
 import { getErrorMessage } from '@/utils/error-with-message'
 import { Box, Paper, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
 import { toast } from 'react-toastify'
 import { UserForm } from './user-form'
@@ -14,29 +10,16 @@ interface UserModalProps {
   isUpdate?: boolean
 }
 export default function UserModal({ modalTitle = undefined, isUpdate = false }: UserModalProps) {
-  //   const router = useRouter()
-
-  //   const { profile, error, login, logout, isLoading, mutate } = useAuth({
-  //     revalidateOnMount: true,
-  //     revalidateOnFocus: true,
-  //     dedupingInterval: TimeByMilliseconds.HOUR,
-  //   })
-
-  //   if (!isLoading && profile?.username) {
-  //     router.push('/')
-  //   }
-
-  async function handleUserSubmit(payload: LoginPayload) {
-    // try {
-    //   await login(payload)
-    //   await router.push('/')
-    // } catch (error: unknown) {
-    //   // console.log((error as Error)?.message || '')
-    //   // toast.error((error as Error)?.message || '')
-    //   const message = getErrorMessage(error)
-    //   // console.log('Message:', message)
-    //   toast.error(message)
-    // }
+  async function handleUserSubmit(payload: UserPayload) {
+    try {
+      console.log(payload)
+    } catch (error: unknown) {
+      // console.log((error as Error)?.message || '')
+      // toast.error((error as Error)?.message || '')
+      const message = getErrorMessage(error)
+      // console.log('Message:', message)
+      toast.error(message)
+    }
   }
 
   return (
