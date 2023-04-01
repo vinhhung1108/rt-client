@@ -1,24 +1,17 @@
 import { Box, Button } from '@mui/material'
 import ButtonModal from '../common/button-modal'
 import { EnhancedTable } from './table'
+import { UserForm } from './user-form'
+import UserModal from './user-modal'
 
 export interface ListUsersProps {}
-function handleAddUserClick() {
-  return ''
-}
 
-export function Modal() {
-  return <Box>Hello Modal</Box>
-}
 export function ListUsers(props: ListUsersProps) {
   return (
     <div>
-      <ButtonModal
-        variant="contained"
-        onClick={handleAddUserClick}
-        label="Add User"
-        modalContent={<Modal />}
-      />
+      <ButtonModal variant="contained" modalContent={<UserModal />}>
+        Create User
+      </ButtonModal>
       <EnhancedTable />
     </div>
   )
