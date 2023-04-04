@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Box from '@mui/material/Box'
 import Button, { ButtonProps } from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
@@ -10,10 +10,6 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   minWidth: 480,
-  // bgcolor: 'background.paper',
-  // bgcolor: 'none',
-  // border: '1px solid #000',
-  // boxShadow: 24,
   p: 2,
 }
 type ButtonModalProps = ButtonProps & {
@@ -21,17 +17,19 @@ type ButtonModalProps = ButtonProps & {
   children?: ReactElement | string
   modalTitle?: string | ReactElement
   modalDescription?: string | ReactElement
+  open: boolean
+  handleOpen: () => void
+  handleClose: () => void
 }
 export default function ButtonModal({
   modalContent = <>Popup Modal</>,
   children = 'Button',
   modalTitle = '',
   modalDescription = '',
+  open,
+  handleOpen,
+  handleClose,
 }: ButtonModalProps) {
-  const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
-
   return (
     <div>
       <Button onClick={handleOpen}>{children}</Button>
