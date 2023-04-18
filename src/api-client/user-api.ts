@@ -1,11 +1,11 @@
-import { UserPayload } from '@/models'
+import { UserPayload, UserUpdatePayload } from '@/models'
 import axiosClient from './axios-client'
 
 export const userApi = {
   create(payload: UserPayload) {
     return axiosClient.post('/user/create', payload)
   },
-  update(id: string, payload: UserPayload) {
+  update(id: string, payload: UserUpdatePayload) {
     return axiosClient.patch(`/user/${id}`, payload)
   },
   delete(id: string) {

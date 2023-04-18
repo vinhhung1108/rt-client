@@ -19,3 +19,15 @@ export function useUserFormSchema() {
   })
   return schema
 }
+
+export function useUserUpdateFormSchema() {
+  const schema = yup.object().shape({
+    username: yup
+      .string()
+      .required('Please enter your username')
+      .min(4, 'Username at least 4 character'),
+    email: yup.string().required('Please enter email').email('Please type your email'),
+    roles: yup.array().nullable(),
+  })
+  return schema
+}

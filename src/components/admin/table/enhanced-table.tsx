@@ -51,9 +51,9 @@ export function EnhancedTable() {
     setDataUserUpdate(data)
     handleOpen()
   }
-  async function handleUserSubmit(payload: UserUpdatePayload) {
+  async function handleUserSubmit(id: string, payload: UserUpdatePayload) {
     try {
-      // await updateUser(payload)
+      await updateUser(id, payload)
       await mutate()
       handleClose()
     } catch (error: unknown) {

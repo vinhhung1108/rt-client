@@ -1,5 +1,5 @@
 import { userApi } from '@/api-client'
-import { User, UserPayload } from '@/models'
+import { User, UserPayload, UserUpdatePayload } from '@/models'
 import useSWR from 'swr'
 import { PublicConfiguration, SWRConfiguration } from 'swr/_internal'
 
@@ -25,7 +25,7 @@ export function useUsers(option?: Partial<PublicConfiguration>, page = 1, limit 
     await userApi.create(payload)
   }
 
-  async function updateUser(id: string, payload: UserPayload) {
+  async function updateUser(id: string, payload: UserUpdatePayload) {
     await userApi.update(id, payload)
   }
   async function deleteUser(id: string) {
