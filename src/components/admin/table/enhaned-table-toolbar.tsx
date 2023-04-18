@@ -1,3 +1,4 @@
+import { useUsers } from '@/hooks'
 import DeleteIcon from '@mui/icons-material/Delete'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import IconButton from '@mui/material/IconButton'
@@ -7,12 +8,21 @@ import Tooltip from '@mui/material/Tooltip'
 import Typography from '@mui/material/Typography'
 
 interface EnhancedTableToolbarProps {
-  numSelected: number
+  selected: readonly string[]
+  handleClearSelected: () => void
 }
 
-export function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
-  const { numSelected } = props
-
+export function EnhancedTableToolbar({ selected, handleClearSelected }: EnhancedTableToolbarProps) {
+  const { deleteUser, mutate } = useUsers()
+  const numSelected = selected.length
+  const handleClick = () => {
+    selected &&
+      selected.map((id) => {
+        deleteUser(id)
+      })
+    handleClearSelected()
+    mutate()
+  }
   return (
     <Toolbar
       sx={{
@@ -35,7 +45,7 @@ export function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={handleClick}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

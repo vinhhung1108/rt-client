@@ -1,4 +1,5 @@
-import { User } from '@/models'
+import { User, UserTable } from '@/models'
+import EditIcon from '@mui/icons-material/Edit'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import TableCell from '@mui/material/TableCell'
@@ -45,7 +46,7 @@ export function stableSort<T>(array: readonly T[], comparator: (a: T, b: T) => n
 
 interface HeadCell {
   disablePadding: boolean
-  id: keyof User
+  id: keyof UserTable
   label: string
   numeric: boolean
 }
@@ -84,10 +85,22 @@ interface EnhancedTableProps {
   order: Order
   orderBy: string
   rowCount: number
+  rowsPerPage: number
+  rowsCurrentPage: number
 }
 
 export function EnhancedTableHead(props: EnhancedTableProps) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+    rowsPerPage,
+    rowsCurrentPage,
+  } = props
+
   const createSortHandler = (property: keyof User) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property)
   }
@@ -98,35 +111,41 @@ export function EnhancedTableHead(props: EnhancedTableProps) {
         <TableCell padding="checkbox">
           <Checkbox
             color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
+            // indeterminate={numSelected > 0 && numSelected < rowCount}
+            indeterminate={numSelected > 0 && numSelected < rowsPerPage}
+            // checked={rowCount > 0 && numSelected === rowCount}
+            checked={rowsCurrentPage > 0 && numSelected === rowsCurrentPage}
             onChange={onSelectAllClick}
             inputProps={{
-              'aria-label': 'select all desserts',
+              'aria-label': 'select all',
             }}
           />
         </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+        {headCells.map(
+          (headCell) =>
+            headCell.id !== 'actions' && (
+              <TableCell
+                key={headCell.id}
+                align={headCell.numeric ? 'right' : 'left'}
+                padding={headCell.disablePadding ? 'none' : 'normal'}
+                sortDirection={orderBy === headCell.id ? order : false}
+              >
+                <TableSortLabel
+                  active={orderBy === headCell.id}
+                  direction={orderBy === headCell.id ? order : 'asc'}
+                  onClick={createSortHandler(headCell.id)}
+                >
+                  {headCell.label}
+                  {orderBy === headCell.id ? (
+                    <Box component="span" sx={visuallyHidden}>
+                      {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                    </Box>
+                  ) : null}
+                </TableSortLabel>
+              </TableCell>
+            )
+        )}
+        <TableCell padding="normal"></TableCell>
       </TableRow>
     </TableHead>
   )

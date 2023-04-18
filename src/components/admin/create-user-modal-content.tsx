@@ -1,21 +1,18 @@
-import { useUsers } from '@/hooks'
 import { UserPayload } from '@/models'
-import { getErrorMessage } from '@/utils/error-with-message'
 import { Box, Paper, Typography } from '@mui/material'
 import { ReactElement } from 'react'
-import { toast } from 'react-toastify'
 import { UserForm } from './user-form'
 
-interface UserModalProps {
+interface CreateUserModalContentProps {
   modalTitle?: ReactElement | string
   isUpdate?: boolean
   handleUserSubmit: (payload: UserPayload) => void
 }
-export default function UserModal({
+export default function CreateUserModalContent({
   modalTitle = undefined,
   isUpdate = false,
   handleUserSubmit,
-}: UserModalProps) {
+}: CreateUserModalContentProps) {
   return (
     <Box>
       <Paper elevation={4} sx={{ p: 4, maxWidth: '480px', mx: 'auto', textAlign: 'center' }}>

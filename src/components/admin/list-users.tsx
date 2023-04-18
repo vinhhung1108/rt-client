@@ -1,23 +1,23 @@
 import { useUsers } from '@/hooks'
 import { UserPayload } from '@/models'
 import { getErrorMessage } from '@/utils/error-with-message'
+import { Button } from '@mui/material'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import ButtonModal from '../common/button-modal'
+import CreateUserModalContent from './create-user-modal-content'
+import ModalCreateUser from './modal-create-user'
 import { EnhancedTable } from './table'
-import UserModal from './user-modal'
 
 export interface ListUsersProps {}
 
 export function ListUsers(props: ListUsersProps) {
   const { createUser, mutate } = useUsers()
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  const [openModalCreateUser, setOpenModalCreateUser] = useState(false)
+  const handleOpen = () => setOpenModalCreateUser(true)
+  const handleClose = () => setOpenModalCreateUser(false)
 
   async function handleUserSubmit(payload: UserPayload) {
     try {
-      console.log(payload)
       await createUser(payload)
       await mutate()
       handleClose()
@@ -28,15 +28,15 @@ export function ListUsers(props: ListUsersProps) {
   }
   return (
     <div>
-      <ButtonModal
-        open={open}
+      <ModalCreateUser
+        open={openModalCreateUser}
         handleOpen={handleOpen}
         handleClose={handleClose}
         variant="contained"
-        modalContent={<UserModal handleUserSubmit={handleUserSubmit} />}
-      >
-        Create User
-      </ButtonModal>
+        modalContent={<CreateUserModalContent handleUserSubmit={handleUserSubmit} />}
+      />
+      <Button onClick={handleOpen}>Create User</Button>
+
       <EnhancedTable />
     </div>
   )

@@ -1,6 +1,8 @@
 import { TimeByMilliseconds } from '@/constants'
 import { useUsers } from '@/hooks'
-import { User } from '@/models'
+import { User, UserUpdatePayload } from '@/models'
+import { getErrorMessage } from '@/utils/error-with-message'
+import EditIcon from '@mui/icons-material/Edit'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import Paper from '@mui/material/Paper'
@@ -11,8 +13,11 @@ import TableContainer from '@mui/material/TableContainer'
 import TablePagination from '@mui/material/TablePagination'
 import TableRow from '@mui/material/TableRow'
 import React, { useState } from 'react'
-import { EnhancedTableHead, getComparator, Order, stableSort } from './enhanced-table-head'
+import { toast } from 'react-toastify'
+import { EnhancedTableHead, Order, getComparator, stableSort } from './enhanced-table-head'
 import { EnhancedTableToolbar } from './enhaned-table-toolbar'
+import ModalUpdateUser from './modal-update-user'
+import UpdateUserModalContent from './update-user-modal-content'
 
 export function EnhancedTable() {
   const [order, setOrder] = useState<Order>('asc')
@@ -23,8 +28,46 @@ export function EnhancedTable() {
   const [pageApi, setPageApi] = useState(1)
   const [limitApi, setLimitApi] = useState(0)
 
-  const { users } = useUsers({ dedupingInterval: TimeByMilliseconds.SECOND * 5 }, pageApi, limitApi)
+  const [openModalUpdateUser, setOpenModalUpdateUser] = useState(false)
+  const [dataUserUpdate, setDataUserUpdate] = useState<UserUpdatePayload | null>(null)
+  const handleOpen = () => setOpenModalUpdateUser(true)
+  const handleClose = () => setOpenModalUpdateUser(false)
+
+  const { users, deleteUser, updateUser, mutate, createUser } = useUsers(
+    { dedupingInterval: TimeByMilliseconds.SECOND * 5 },
+    pageApi,
+    limitApi
+  )
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    minWidth: 480,
+    p: 2,
+  }
+  const handleClickUpdate = (data: UserUpdatePayload) => {
+    console.log('Update button clicked:', data)
+    setDataUserUpdate(data)
+    handleOpen()
+  }
+  async function handleUserSubmit(payload: UserUpdatePayload) {
+    try {
+      // await updateUser(payload)
+      await mutate()
+      handleClose()
+    } catch (error: unknown) {
+      const message = getErrorMessage(error)
+      toast.error(message)
+    }
+  }
+
   const rows = Array.isArray(users) ? users : []
+
+  const checkRowsCurrentPage = (x: number, page: number, rowsPerPage: number) => {
+    return x >= page * rowsPerPage && x < (page + 1) * rowsPerPage
+  }
+  const current_rows = rows.filter((row, index) => checkRowsCurrentPage(index, page, rowsPerPage))
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof User) => {
     const isAsc = orderBy === property && order === 'asc'
@@ -34,10 +77,15 @@ export function EnhancedTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.username)
+      // const newSelected = rows.map((n) => n._id)
+      const newSelected = current_rows.map((n) => n._id)
       setSelected(newSelected)
       return
     }
+    setSelected([])
+  }
+
+  const handleClearSelected = () => {
     setSelected([])
   }
 
@@ -57,7 +105,6 @@ export function EnhancedTable() {
         selected.slice(selectedIndex + 1)
       )
     }
-
     setSelected(newSelected)
   }
 
@@ -78,7 +125,7 @@ export function EnhancedTable() {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar selected={selected} handleClearSelected={handleClearSelected} />
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size="medium">
             <EnhancedTableHead
@@ -88,22 +135,24 @@ export function EnhancedTable() {
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
+              rowsPerPage={rowsPerPage}
+              rowsCurrentPage={current_rows.length}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.username)
+                  const isItemSelected = isSelected(row._id)
                   const labelId = `enhanced-table-checkbox-${index}`
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.username)}
+                      onClick={(event) => handleClick(event, row._id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.username}
+                      key={index}
                       selected={isItemSelected}
                       sx={{ cursor: 'pointer' }}
                     >
@@ -122,6 +171,14 @@ export function EnhancedTable() {
                       <TableCell align="left">{row.username}</TableCell>
                       <TableCell align="left">{row.email}</TableCell>
                       <TableCell align="left">{row.roles.toString()}</TableCell>
+                      <TableCell
+                        align="right"
+                        onClick={(event) => {
+                          event.stopPropagation()
+                        }}
+                      >
+                        <EditIcon onClick={() => handleClickUpdate({ ...row })} />
+                      </TableCell>
                     </TableRow>
                   )
                 })}
@@ -137,6 +194,18 @@ export function EnhancedTable() {
             </TableBody>
           </Table>
         </TableContainer>
+        <ModalUpdateUser
+          open={openModalUpdateUser}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          variant="contained"
+          modalContent={
+            <UpdateUserModalContent
+              dataUserUpdate={dataUserUpdate}
+              handleUserSubmit={handleUserSubmit}
+            />
+          }
+        />
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
