@@ -36,7 +36,7 @@ export function UserUpdateForm({ onSubmit, isUpdate = true, dataUserUpdate }: Us
   }
   return (
     <Box component="form" onSubmit={handleSubmit(handleUserSubmit)}>
-      <InputField name="username" label="Username" control={control} />
+      <InputField name="username" label="Username" control={control} disabled />
       <InputField name="email" label="Email" control={control} />
 
       <MultiSelectField name="roles" label="Roles" control={control} names={valueRoles} />
