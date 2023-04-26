@@ -182,6 +182,8 @@ export function EnhancedTable() {
                       <TableCell align="left">{row.username}</TableCell>
                       <TableCell align="left">{row.email}</TableCell>
                       <TableCell align="left">{row.roles.toString()}</TableCell>
+                      <TableCell align="left">{row.isCreateAble.toString()}</TableCell>
+                      <TableCell align="left">{row.isActive.toString()}</TableCell>
                       <TableCell
                         align="right"
                         onClick={(event) => {

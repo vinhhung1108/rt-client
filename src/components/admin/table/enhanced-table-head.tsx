@@ -25,8 +25,8 @@ export function getComparator<Key extends keyof any>(
   order: Order,
   orderBy: Key
 ): (
-  a: { [key in Key]: number | string | string[] },
-  b: { [key in Key]: number | string | string[] }
+  a: { [key in Key]: number | string | string[] | boolean },
+  b: { [key in Key]: number | string | string[] | boolean }
 ) => number {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -75,6 +75,18 @@ const headCells: readonly HeadCell[] = [
     numeric: false,
     disablePadding: false,
     label: 'Roles',
+  },
+  {
+    id: 'isCreateAble',
+    numeric: false,
+    disablePadding: false,
+    label: 'Is CreateAble',
+  },
+  {
+    id: 'isActive',
+    numeric: false,
+    disablePadding: false,
+    label: 'Is Active',
   },
 ]
 

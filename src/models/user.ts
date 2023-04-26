@@ -4,6 +4,8 @@ export interface User {
   roles: string[]
   userId: string
   _id: string
+  isCreateAble: boolean
+  isActive: boolean
 }
 
 export interface UserTable {
@@ -13,4 +15,6 @@ export interface UserTable {
   userId: string
   _id: string
   actions?: string
+  isCreateAble: boolean
+  isActive: boolean
 }
