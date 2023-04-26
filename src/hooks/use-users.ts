@@ -32,8 +32,13 @@ export function useUsers(option?: Partial<PublicConfiguration>, page = 1, limit 
     await userApi.delete(id)
   }
 
+  async function userDetail(id: string) {
+    return await userApi.profile(id)
+  }
+
   return {
     users,
+    userDetail,
     createUser,
     updateUser,
     deleteUser,

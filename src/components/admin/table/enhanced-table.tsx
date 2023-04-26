@@ -2,7 +2,7 @@ import { TimeByMilliseconds } from '@/constants'
 import { useUsers } from '@/hooks'
 import { User, UserUpdatePayload } from '@/models'
 import { getErrorMessage } from '@/utils/error-with-message'
-import EditIcon from '@mui/icons-material/Edit'
+import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import Paper from '@mui/material/Paper'
@@ -18,6 +18,7 @@ import { EnhancedTableHead, Order, getComparator, stableSort } from './enhanced-
 import { EnhancedTableToolbar } from './enhaned-table-toolbar'
 import ModalUpdateUser from './modal-update-user'
 import UpdateUserModalContent from './update-user-modal-content'
+import { useRouter } from 'next/router'
 
 export function EnhancedTable() {
   const [order, setOrder] = useState<Order>('asc')
@@ -32,7 +33,7 @@ export function EnhancedTable() {
   const [dataUserUpdate, setDataUserUpdate] = useState<UserUpdatePayload | null>(null)
   const handleOpen = () => setOpenModalUpdateUser(true)
   const handleClose = () => setOpenModalUpdateUser(false)
-
+  const router = useRouter()
   const { users, deleteUser, updateUser, mutate, createUser } = useUsers(
     { dedupingInterval: TimeByMilliseconds.SECOND * 5 },
     pageApi,
@@ -89,7 +90,7 @@ export function EnhancedTable() {
     setSelected([])
   }
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+  const handleClickCheckbox = (event: React.MouseEvent<unknown>, name: string) => {
     const selectedIndex = selected.indexOf(name)
     let newSelected: readonly string[] = []
 
@@ -106,6 +107,10 @@ export function EnhancedTable() {
       )
     }
     setSelected(newSelected)
+  }
+
+  const handleClickRow = (event: React.MouseEvent<unknown>, id: string) => {
+    router.push(`/user/${id}`)
   }
 
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -147,8 +152,8 @@ export function EnhancedTable() {
 
                   return (
                     <TableRow
+                      onClick={(event) => handleClickRow(event, row._id)}
                       hover
-                      onClick={(event) => handleClick(event, row._id)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -156,8 +161,14 @@ export function EnhancedTable() {
                       selected={isItemSelected}
                       sx={{ cursor: 'pointer' }}
                     >
-                      <TableCell padding="checkbox">
+                      <TableCell
+                        padding="checkbox"
+                        onClick={(event) => {
+                          event.stopPropagation()
+                        }}
+                      >
                         <Checkbox
+                          onClick={(event) => handleClickCheckbox(event, row._id)}
                           color="primary"
                           checked={isItemSelected}
                           inputProps={{
@@ -177,7 +188,7 @@ export function EnhancedTable() {
                           event.stopPropagation()
                         }}
                       >
-                        <EditIcon onClick={() => handleClickUpdate({ ...row })} />
+                        <Button onClick={() => handleClickUpdate({ ...row })}>Edit</Button>
                       </TableCell>
                     </TableRow>
                   )

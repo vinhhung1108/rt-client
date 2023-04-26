@@ -1,4 +1,4 @@
-import { UserPayload, UserUpdatePayload } from '@/models'
+import { User, UserPayload, UserUpdatePayload } from '@/models'
 import axiosClient from './axios-client'
 
 export const userApi = {
@@ -13,5 +13,8 @@ export const userApi = {
   },
   listUser(page: number, limit: number) {
     return axiosClient.get(`/user?_page=${page}&_limit=${limit}`)
+  },
+  profile(id: string) {
+    return axiosClient.get(`/user/${id}`)
   },
 }
