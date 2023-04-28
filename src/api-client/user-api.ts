@@ -14,7 +14,7 @@ export const userApi = {
   listUser(page: number, limit: number) {
     return axiosClient.get(`/user?_page=${page}&_limit=${limit}`)
   },
-  profile(id: string) {
+  profile(id: string): Promise<User | undefined> {
     return axiosClient.get(`/user/${id}`)
   },
 }

@@ -1,10 +1,12 @@
 import { userApi } from '@/api-client'
+import { TimeByMilliseconds } from '@/constants'
 import { User, UserPayload, UserUpdatePayload } from '@/models'
 import useSWR from 'swr'
 import { PublicConfiguration, SWRConfiguration } from 'swr/_internal'
 
-export function useUsers(option?: Partial<PublicConfiguration>, page = 1, limit = 0) {
+export function useUser(option?: Partial<PublicConfiguration>, id?: string) {
   const configSWR: SWRConfiguration = {
+    dedupingInterval: TimeByMilliseconds.SECOND * 2,
     ...option,
     onSuccess(data) {
       //something on success
@@ -14,16 +16,7 @@ export function useUsers(option?: Partial<PublicConfiguration>, page = 1, limit 
     },
   }
 
-  const {
-    data: users,
-    error,
-    mutate,
-    isLoading,
-  } = useSWR<User[] | null>(`/user?_page=${page}&_limit=${limit}`, configSWR)
-
-  async function createUser(payload: UserPayload) {
-    await userApi.create(payload)
-  }
+  const { data: user, error, mutate, isLoading } = useSWR<User | null>(`/user/${id}`, configSWR)
 
   async function updateUser(id: string, payload: UserUpdatePayload) {
     await userApi.update(id, payload)
@@ -32,9 +25,13 @@ export function useUsers(option?: Partial<PublicConfiguration>, page = 1, limit 
     await userApi.delete(id)
   }
 
+  // async function userDetail(id: string): Promise<User | undefined> {
+  //   return await userApi.profile(id)
+  // }
+
   return {
-    users,
-    createUser,
+    user,
+    // userDetail,
     updateUser,
     deleteUser,
     error,
