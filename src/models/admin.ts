@@ -4,6 +4,9 @@ export interface UserPayload {
   password: string
   confirmPassword: string
   roles: string[]
+  isActive: boolean
+  isBanned: boolean
+  isCreateAble: boolean
 }
 
 export interface UserUpdatePayload {
@@ -13,4 +16,7 @@ export interface UserUpdatePayload {
   roles: string[]
   readonly _id: string
   readonly username: string
+  isActive: boolean
+  isBanned: boolean
+  isCreateAble: boolean
 }

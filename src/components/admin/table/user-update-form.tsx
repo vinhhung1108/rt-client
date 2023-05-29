@@ -1,9 +1,8 @@
-import { InputField, MultiSelectField } from '@/components/form'
+import { InputField, MultiSelectField, SwitchField } from '@/components/form'
 import { useUserUpdateFormSchema } from '@/hooks'
 import { UserUpdatePayload } from '@/models'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { Box, Button, CircularProgress, IconButton, InputAdornment } from '@mui/material'
+import { Box, Button, CircularProgress } from '@mui/material'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ROLES_LIST } from '../roles-list'
@@ -30,7 +29,7 @@ export function UserUpdateForm({ onSubmit, isUpdate = true, dataUserUpdate }: Us
     resolver: yupResolver(schema),
   })
   const valueRoles = roles_list.map((role) => role.name)
-
+  console.log('DATA TO UPDATE', JSON.stringify(dataUserUpdate))
   async function handleUserSubmit(payload: UserUpdatePayload) {
     await onSubmit?.(dataUserUpdate._id, payload)
   }
@@ -40,6 +39,20 @@ export function UserUpdateForm({ onSubmit, isUpdate = true, dataUserUpdate }: Us
       <InputField name="email" label="Email" control={control} />
 
       <MultiSelectField name="roles" label="Roles" control={control} names={valueRoles} />
+
+      <SwitchField
+        name="isCreateAble"
+        control={control}
+        label="IsCreateAble"
+        checked={dataUserUpdate?.isCreateAble}
+      />
+
+      <SwitchField
+        name="isActive"
+        control={control}
+        label="IsActive"
+        checked={dataUserUpdate?.isActive}
+      />
 
       <Button
         disabled={isSubmitting}

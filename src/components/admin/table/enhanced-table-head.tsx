@@ -80,13 +80,31 @@ const headCells: readonly HeadCell[] = [
     id: 'isCreateAble',
     numeric: false,
     disablePadding: false,
-    label: 'Is CreateAble',
+    label: 'IsCreateAble',
   },
   {
     id: 'isActive',
     numeric: false,
     disablePadding: false,
-    label: 'Is Active',
+    label: 'IsActive',
+  },
+  {
+    id: 'isLoggedIn',
+    numeric: false,
+    disablePadding: false,
+    label: 'IsLoggedIn',
+  },
+  {
+    id: 'lastLogin',
+    numeric: false,
+    disablePadding: false,
+    label: 'LastLogin',
+  },
+  {
+    id: 'clientApp',
+    numeric: false,
+    disablePadding: false,
+    label: 'ClientApp',
   },
 ]
 

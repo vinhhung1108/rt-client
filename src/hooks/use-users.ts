@@ -22,7 +22,8 @@ export function useUsers(option?: Partial<PublicConfiguration>, page = 1, limit 
   } = useSWR<User[] | null>(`/user?_page=${page}&_limit=${limit}`, configSWR)
 
   async function createUser(payload: UserPayload) {
-    await userApi.create(payload)
+    const payloadFull = { ...payload, isActive: false, isBanned: false, isCreateAble: true }
+    await userApi.create(payloadFull)
   }
 
   async function updateUser(id: string, payload: UserUpdatePayload) {

@@ -18,12 +18,18 @@ export default function ProfilePage(props: ProfilePageProps) {
   function handleClickBack() {
     router.back()
   }
+  console.log(JSON.stringify(user))
   return (
     <Box>
       <Button onClick={handleClickBack}>Back to list</Button>
       <Typography variant="h4">User Detail</Typography>
       <Typography>Username: {user?.username} </Typography>
       <Typography>Email: {user?.email} </Typography>
+      <Typography>Roles: {user?.roles?.toString()} </Typography>
+      <Typography>IsCreateAble: {user?.isCreateAble?.toString()} </Typography>
+      <Typography>IsActive: {user?.isActive?.toString()} </Typography>
+      <Typography>IsLoggedIn: {user?.isLoggedIn?.toString()} </Typography>
+      <Typography>ClientApp: {user?.clientApp} </Typography>
     </Box>
   )
 }

@@ -15,6 +15,7 @@ export function UserLayout({ children }: LayoutProps) {
           <SideBarAdmin />
           <Box sx={{ p: '20px' }}>
             {JSON.stringify(profile)}
+
             {children}
           </Box>
         </Stack>

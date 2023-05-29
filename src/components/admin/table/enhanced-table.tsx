@@ -184,6 +184,9 @@ export function EnhancedTable() {
                       <TableCell align="left">{row.roles.toString()}</TableCell>
                       <TableCell align="left">{row.isCreateAble.toString()}</TableCell>
                       <TableCell align="left">{row.isActive.toString()}</TableCell>
+                      <TableCell align="left">{row.isLoggedIn?.toString()}</TableCell>
+                      <TableCell align="left">{row.lastLogin?.toString()}</TableCell>
+                      <TableCell align="left">{row.clientApp?.toString()}</TableCell>
                       <TableCell
                         align="right"
                         onClick={(event) => {

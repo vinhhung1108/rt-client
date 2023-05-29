@@ -6,6 +6,10 @@ export interface User {
   _id: string
   isCreateAble: boolean
   isActive: boolean
+  isLoggedIn: boolean
+  IPAddressLogin: string
+  lastLogin: string
+  clientApp: string
 }
 
 export interface UserTable {
@@ -17,4 +21,8 @@ export interface UserTable {
   actions?: string
   isCreateAble: boolean
   isActive: boolean
+  isLoggedIn: boolean
+  IPAddressLogin: string
+  lastLogin: string
+  clientApp: string
 }
