@@ -6,7 +6,9 @@ export const userApi = {
     return axiosClient.post('/user/create', payload)
   },
   update(id: string, payload: UserUpdatePayload) {
-    return axiosClient.patch(`/user/${id}`, payload)
+    const { username, email, isActive, isBanned, isCreateAble, roles, _id } = payload
+    const datapayload = { username, email, isActive, isBanned, isCreateAble, roles, _id }
+    return axiosClient.patch(`/user/${id}`, datapayload)
   },
   delete(id: string) {
     return axiosClient.delete(`/user/${id}`)

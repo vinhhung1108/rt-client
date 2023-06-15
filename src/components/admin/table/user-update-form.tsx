@@ -29,7 +29,9 @@ export function UserUpdateForm({ onSubmit, isUpdate = true, dataUserUpdate }: Us
     resolver: yupResolver(schema),
   })
   const valueRoles = roles_list.map((role) => role.name)
-  console.log('DATA TO UPDATE', JSON.stringify(dataUserUpdate))
+
+  console.log('DATA TO UPDATE: ', JSON.stringify(dataUserUpdate))
+
   async function handleUserSubmit(payload: UserUpdatePayload) {
     await onSubmit?.(dataUserUpdate._id, payload)
   }

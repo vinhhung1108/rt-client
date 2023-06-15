@@ -47,12 +47,22 @@ export function EnhancedTable() {
     minWidth: 480,
     p: 2,
   }
-  const handleClickUpdate = (data: UserUpdatePayload) => {
+  const handleClickUpdate = (dataUpdate: UserUpdatePayload) => {
+    const { username, email, isActive, isBanned, isCreateAble, roles, _id } = dataUpdate
+    const data: UserUpdatePayload = {
+      username,
+      email,
+      isActive,
+      isBanned,
+      isCreateAble,
+      roles,
+      _id,
+    }
     console.log('Update button clicked:', data)
     setDataUserUpdate(data)
     handleOpen()
   }
-  async function handleUserSubmit(id: string, payload: UserUpdatePayload) {
+  async function handleUserUpdateSubmit(id: string, payload: UserUpdatePayload) {
     try {
       await updateUser(id, payload)
       await mutate()
@@ -218,7 +228,7 @@ export function EnhancedTable() {
           modalContent={
             <UpdateUserModalContent
               dataUserUpdate={dataUserUpdate}
-              handleUserSubmit={handleUserSubmit}
+              handleUserSubmit={handleUserUpdateSubmit}
             />
           }
         />

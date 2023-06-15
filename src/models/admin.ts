@@ -11,8 +11,6 @@ export interface UserPayload {
 
 export interface UserUpdatePayload {
   email: string
-  // password: string
-  // confirmPassword: string
   roles: string[]
   readonly _id: string
   readonly username: string
