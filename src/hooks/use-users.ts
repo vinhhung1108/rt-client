@@ -26,8 +26,8 @@ export function useUsers(option?: Partial<PublicConfiguration>, page = 1, limit 
     await userApi.create(payloadFull)
   }
 
-  async function updateUser(id: string, payload: UserUpdatePayload) {
-    await userApi.update(id, payload)
+  async function updateUser(payload: UserUpdatePayload) {
+    await userApi.update(payload)
   }
   async function deleteUser(id: string) {
     await userApi.delete(id)

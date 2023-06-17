@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form'
 import { ROLES_LIST } from '../roles-list'
 
 export interface UserUpdateFormProps {
-  onSubmit?: (id: string, payload: UserUpdatePayload) => void
+  onSubmit?: (payload: UserUpdatePayload) => void
   isUpdate?: boolean
   dataUserUpdate: UserUpdatePayload
 }
@@ -33,7 +33,7 @@ export function UserUpdateForm({ onSubmit, isUpdate = true, dataUserUpdate }: Us
   console.log('DATA TO UPDATE: ', JSON.stringify(dataUserUpdate))
 
   async function handleUserSubmit(payload: UserUpdatePayload) {
-    await onSubmit?.(dataUserUpdate._id, payload)
+    await onSubmit?.(payload)
   }
   return (
     <Box component="form" onSubmit={handleSubmit(handleUserSubmit)}>

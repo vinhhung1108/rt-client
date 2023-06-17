@@ -77,7 +77,7 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
               onClick={logout}
               href=""
             >
-              Logout
+              Logout ({profile?.username})
             </MuiLink>
           )}
         </Stack>

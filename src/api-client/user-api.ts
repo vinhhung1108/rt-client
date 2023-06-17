@@ -5,10 +5,10 @@ export const userApi = {
   create(payload: UserPayload) {
     return axiosClient.post('/user/create', payload)
   },
-  update(id: string, payload: UserUpdatePayload) {
+  update(payload: UserUpdatePayload) {
     const { username, email, isActive, isBanned, isCreateAble, roles, _id } = payload
     const datapayload = { username, email, isActive, isBanned, isCreateAble, roles, _id }
-    return axiosClient.patch(`/user/${id}`, datapayload)
+    return axiosClient.patch(`/user/${_id}`, datapayload)
   },
   delete(id: string) {
     return axiosClient.delete(`/user/${id}`)

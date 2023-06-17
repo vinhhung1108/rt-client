@@ -19,7 +19,7 @@ export function useUser(option?: Partial<PublicConfiguration>, id?: string) {
   const { data: user, error, mutate, isLoading } = useSWR<User | null>(`/user/${id}`, configSWR)
 
   async function updateUser(id: string, payload: UserUpdatePayload) {
-    await userApi.update(id, payload)
+    await userApi.update(payload)
   }
   async function deleteUser(id: string) {
     await userApi.delete(id)
