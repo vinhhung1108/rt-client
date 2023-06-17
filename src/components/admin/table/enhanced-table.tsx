@@ -1,6 +1,6 @@
 import { TimeByMilliseconds } from '@/constants'
 import { useUsers } from '@/hooks'
-import { User, UserUpdatePayload } from '@/models'
+import { ChangePasswordPayload, User, UserPayload, UserUpdatePayload } from '@/models'
 import { getErrorMessage } from '@/utils/error-with-message'
 import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -19,6 +19,8 @@ import { EnhancedTableToolbar } from './enhaned-table-toolbar'
 import ModalUpdateUser from './modal-update-user'
 import UpdateUserModalContent from './update-user-modal-content'
 import { useRouter } from 'next/router'
+import ModalChangePassword from './changepassword/modal-change-password'
+import ChangePasswordContent from './changepassword/change-password-content'
 
 export function EnhancedTable() {
   const [order, setOrder] = useState<Order>('asc')
@@ -30,11 +32,18 @@ export function EnhancedTable() {
   const [limitApi, setLimitApi] = useState(0)
 
   const [openModalUpdateUser, setOpenModalUpdateUser] = useState(false)
+  const [openModalChangePassword, setOpenModalChangePassword] = useState(false)
+
   const [dataUserUpdate, setDataUserUpdate] = useState<UserUpdatePayload | null>(null)
+  const [dataChangePassword, setDataChangePassword] = useState<ChangePasswordPayload | null>(null)
+
   const handleOpen = () => setOpenModalUpdateUser(true)
   const handleClose = () => setOpenModalUpdateUser(false)
+  const openChangePassword = () => setOpenModalChangePassword(true)
+  const closeChangePassword = () => setOpenModalChangePassword(false)
+
   const router = useRouter()
-  const { users, deleteUser, updateUser, mutate, createUser } = useUsers(
+  const { users, updateUser, mutate, changePassword } = useUsers(
     { dedupingInterval: TimeByMilliseconds.SECOND * 5 },
     pageApi,
     limitApi
@@ -48,12 +57,11 @@ export function EnhancedTable() {
     p: 2,
   }
   const handleClickUpdate = (dataUpdate: UserUpdatePayload) => {
-    const { username, email, isActive, isBanned, isCreateAble, roles, _id } = dataUpdate
+    const { username, email, isActive, isCreateAble, roles, _id } = dataUpdate
     const data: UserUpdatePayload = {
       username,
       email,
       isActive,
-      isBanned,
       isCreateAble,
       roles,
       _id,
@@ -62,11 +70,29 @@ export function EnhancedTable() {
     setDataUserUpdate(data)
     handleOpen()
   }
+  const handleClickChangePassword = (data: UserUpdatePayload) => {
+    const { _id, username } = data
+    let password = ''
+    let confirmPassword = ''
+    setDataChangePassword({ _id, username, password, confirmPassword })
+    openChangePassword()
+  }
   async function handleUserUpdateSubmit(payload: UserUpdatePayload) {
     try {
       await updateUser(payload)
       await mutate()
       handleClose()
+    } catch (error: unknown) {
+      const message = getErrorMessage(error)
+      toast.error(message)
+    }
+  }
+
+  async function handleChangePasswordSubmit(payload: ChangePasswordPayload) {
+    try {
+      await changePassword(payload)
+      await mutate()
+      closeChangePassword()
     } catch (error: unknown) {
       const message = getErrorMessage(error)
       toast.error(message)
@@ -88,7 +114,6 @@ export function EnhancedTable() {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      // const newSelected = rows.map((n) => n._id)
       const newSelected = current_rows.map((n) => n._id)
       setSelected(newSelected)
       return
@@ -204,6 +229,9 @@ export function EnhancedTable() {
                         }}
                       >
                         <Button onClick={() => handleClickUpdate({ ...row })}>Edit</Button>
+                        <Button onClick={() => handleClickChangePassword({ ...row })}>
+                          Change Password
+                        </Button>
                       </TableCell>
                     </TableRow>
                   )
@@ -229,6 +257,19 @@ export function EnhancedTable() {
             <UpdateUserModalContent
               dataUserUpdate={dataUserUpdate}
               handleUserSubmit={handleUserUpdateSubmit}
+            />
+          }
+        />
+
+        <ModalChangePassword
+          open={openModalChangePassword}
+          handleOpen={openChangePassword}
+          handleClose={closeChangePassword}
+          variant="contained"
+          modalContent={
+            <ChangePasswordContent
+              dataChangePassword={dataChangePassword}
+              onSubmit={handleChangePasswordSubmit}
             />
           }
         />

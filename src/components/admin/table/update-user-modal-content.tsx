@@ -6,7 +6,7 @@ import { UserUpdateForm } from './user-update-form'
 interface UpdateUserModalContentProps {
   modalTitle?: ReactElement | string
   isUpdate?: boolean
-  handleUserSubmit: (id: string, payload: UserUpdatePayload) => void
+  handleUserSubmit: (payload: UserUpdatePayload) => void
   dataUserUpdate: UserUpdatePayload | null
 }
 export default function UpdateUserModalContent({

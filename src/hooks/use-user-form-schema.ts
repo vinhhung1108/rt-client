@@ -31,3 +31,17 @@ export function useUserUpdateFormSchema() {
   })
   return schema
 }
+
+export function useChangePasswordFormSchema() {
+  const schema = yup.object().shape({
+    password: yup
+      .string()
+      .required('Please enter new password')
+      .min(6, 'Password at least 6 character'),
+    confirmPassword: yup
+      .string()
+      .required('Please retype new password')
+      .oneOf([yup.ref('password')], 'Passwords must match'),
+  })
+  return schema
+}

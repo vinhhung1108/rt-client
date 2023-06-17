@@ -1,4 +1,4 @@
-import { User, UserPayload, UserUpdatePayload } from '@/models'
+import { ChangePasswordPayload, User, UserPayload, UserUpdatePayload } from '@/models'
 import axiosClient from './axios-client'
 
 export const userApi = {
@@ -6,10 +6,15 @@ export const userApi = {
     return axiosClient.post('/user/create', payload)
   },
   update(payload: UserUpdatePayload) {
-    const { username, email, isActive, isBanned, isCreateAble, roles, _id } = payload
-    const datapayload = { username, email, isActive, isBanned, isCreateAble, roles, _id }
+    const { username, email, isActive, isCreateAble, roles, _id } = payload
+    const datapayload = { username, email, isActive, isCreateAble, roles, _id }
     return axiosClient.patch(`/user/${_id}`, datapayload)
   },
+  changePassword(payload: ChangePasswordPayload) {
+    const { _id, password } = payload
+    return axiosClient.patch(`/user/${_id}`, { password })
+  },
+
   delete(id: string) {
     return axiosClient.delete(`/user/${id}`)
   },

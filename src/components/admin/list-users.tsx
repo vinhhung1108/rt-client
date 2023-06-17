@@ -26,6 +26,7 @@ export function ListUsers(props: ListUsersProps) {
       toast.error(message)
     }
   }
+
   return (
     <div>
       <ModalCreateUser

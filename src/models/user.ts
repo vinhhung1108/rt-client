@@ -26,3 +26,10 @@ export interface UserTable {
   lastLogin: string
   clientApp: string
 }
+
+export interface ChangePasswordPayload {
+  readonly _id: string
+  readonly username: string
+  password: string
+  confirmPassword: string
+}
