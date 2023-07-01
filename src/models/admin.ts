@@ -6,6 +6,7 @@ export interface UserPayload {
   roles: string[]
   isActive: boolean
   isCreateAble: boolean
+  isLoggedIn: boolean
 }
 
 export interface UserUpdatePayload {
@@ -15,4 +16,5 @@ export interface UserUpdatePayload {
   readonly username: string
   isActive: boolean
   isCreateAble: boolean
+  isLoggedIn: boolean
 }

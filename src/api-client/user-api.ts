@@ -10,6 +10,9 @@ export const userApi = {
     const datapayload = { username, email, isActive, isCreateAble, roles, _id }
     return axiosClient.patch(`/user/${_id}`, datapayload)
   },
+  updateLoggedIn(id: string, isLoggedIn: boolean) {
+    return axiosClient.patch(`/user/${id}`, { isLoggedIn: isLoggedIn })
+  },
   changePassword(payload: ChangePasswordPayload) {
     const { _id, password } = payload
     return axiosClient.patch(`/user/${_id}`, { password })

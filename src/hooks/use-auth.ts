@@ -44,9 +44,9 @@ export function useAuth(option?: Partial<PublicConfiguration>) {
     await mutate()
   }
   async function logout() {
-    await authApi.logout()
+    await authApi.logout(profile?.userId)
     localStorage.removeItem(StorageKeys.USER_INFO)
-    // await mutate({ data: {} }, true)
+    // await mutate(null, false)
     await mutateAll('/auth/profile', { data: {} }, false)
   }
   return {

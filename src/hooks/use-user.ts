@@ -4,7 +4,7 @@ import { User, UserPayload, UserUpdatePayload } from '@/models'
 import useSWR from 'swr'
 import { PublicConfiguration, SWRConfiguration } from 'swr/_internal'
 
-export function useUser(option?: Partial<PublicConfiguration>, id?: string) {
+export function useUser(option?: Partial<PublicConfiguration>, id: string = '') {
   const configSWR: SWRConfiguration = {
     dedupingInterval: TimeByMilliseconds.SECOND * 2,
     ...option,

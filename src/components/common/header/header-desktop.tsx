@@ -75,7 +75,7 @@ export function HeaderDesktop(props: HeaderDesktopProps) {
               component={Link}
               variant="body2"
               onClick={logout}
-              href=""
+              href="/login"
             >
               Logout ({profile?.username})
             </MuiLink>
